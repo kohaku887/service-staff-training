@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>パティスリー・ベル｜スタッフ研修サイト</title>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink: #E91E8C;
+            --pink-light: #FF6B9D;
+            --pink-pale: #FFF0F7;
+            --pink-border: #FFD0E8;
+            --cream: #FFF8F2;
+            --brown: #5C3317;
+            --text: #2A1A1A;
+            --muted: #A08090;
+            --white: #FFFFFF;
+            --shadow: 0 8px 32px rgba(233,30,140,0.10);
+            --radius: 20px;
+            --font: 'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', sans-serif;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: var(--font); background: var(--cream); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+        /* ── NAV ── */
+        nav {
+            background: var(--white);
+            border-bottom: 2px solid var(--pink-border);
+            position: sticky; top: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 24px; height: 64px;
+            box-shadow: 0 2px 16px rgba(233,30,140,0.07);
+        }
+        .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .nav-logo-icon { font-size: 26px; }
+        .nav-logo-text { font-family: 'Playfair Display', serif; font-size: 17px; color: var(--pink); font-weight: 700; }
+        .nav-links { display: flex; gap: 6px; }
+        .nav-btn {
+            padding: 7px 12px; border-radius: 50px; border: none; cursor: pointer;
+            font-family: var(--font); font-size: 13px; font-weight: 700;
+            background: transparent; color: var(--muted); transition: all 0.2s;
+        }
+        .nav-btn:hover, .nav-btn.active { background: var(--pink-pale); color: var(--pink); }
+        .nav-btn.cta { background: var(--pink); color: #fff; box-shadow: 0 4px 12px rgba(233,30,140,0.3); }
+
+        /* ── PAGES ── */
+        .page { display: none; }
+        .page.active { display: block; }
+
+        /* ── HERO ── */
+        .hero {
+            position: relative;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 64px 24px;
+            color: #fff;
+            overflow: hidden;
+            background-color: var(--brown);
+            background-image: 
+                linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)), 
+                url('https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&q=80&w=1600');
+            background-size: cover;
+            background-position: center;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.2); 
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+        .hero h1 { 
+            font-family: 'Zen Maru Gothic', serif; 
+            font-weight: 900; 
+            font-size: 40px; 
+            margin-bottom: 16px; 
+            line-height: 1.3;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            color: #fff;
+        }
+        .hero p { 
+            color: #fff; 
+            font-size: 20px; 
+            margin-bottom: 32px; 
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .btn-hero-main {
+            padding: 18px 48px; border-radius: 50px; border: none; cursor: pointer;
+            background: var(--pink); color: #fff; font-weight: 900; 
+            box-shadow: 0 4px 25px rgba(233,30,140,0.6);
+            font-size: 18px;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .btn-hero-main:hover {
+            transform: scale(1.05) translateY(-3px);
+            background: var(--pink-light);
+            box-shadow: 0 8px 30px rgba(233,30,140,0.7);
+        }
+
+        /* ── SECTION ── */
+        .section { padding: 60px 20px; max-width: 1100px; margin: 0 auto; }
+        .section-title { 
+            font-family: var(--font); 
+            font-weight: 900; 
+            font-size: 28px; 
+            margin-bottom: 8px; 
+            color: var(--text);
+            text-align: center;
+        }
+        .section-sub { color: var(--muted); font-size: 14px; margin-bottom: 32px; text-align: center; }
+
+        /* ── CARDS ── */
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+        .card {
+            background: #fff; padding: 30px; border-radius: var(--radius); box-shadow: var(--shadow);
+            cursor: pointer; transition: 0.3s; border: 2px solid transparent;
+            display: flex; flex-direction: column; height: 100%;
+        }
+        .card:hover { transform: translateY(-5px); border-color: var(--pink-border); box-shadow: 0 12px 40px rgba(233,30,140,0.15); }
+        .card-icon { font-size: 40px; margin-bottom: 16px; }
+        .card-title { font-size: 18px; font-weight: 900; margin-bottom: 10px; color: var(--brown); }
+        .card-desc { font-size: 13px; color: var(--muted); flex-grow: 1; line-height: 1.6; }
+
+        /* ── MENU ── */
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .menu-item { background: #fff; padding: 24px; border-radius: 20px; box-shadow: var(--shadow); border: 1px solid var(--pink-pale); transition: 0.3s; text-align: center; }
+        .menu-item:hover { transform: scale(1.02); }
+        .menu-img-placeholder { 
+            width: 80px; height: 80px; background: var(--pink-pale); border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 40px; margin: 0 auto 16px auto;
+        }
+        .menu-price { color: var(--pink); font-weight: 900; font-size: 20px; margin-top: 8px; }
+
+        /* ── QUIZ UI ── */
+        .lesson-header { padding: 40px 24px; text-align: center; color: #fff; border-radius: 0 0 30px 30px; }
+        .quiz-wrap { max-width: 600px; margin: -40px auto 40px auto; padding: 24px; position: relative; z-index: 10; }
+        .quiz-progress-bar { height: 10px; background: rgba(255,255,255,0.3); border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
+        .quiz-progress-fill { height: 100%; background: #fff; width: 0%; transition: 0.4s; }
+        .quiz-question-box { background: #fff; padding: 32px; border-radius: 20px; box-shadow: var(--shadow); margin-bottom: 20px; }
+        .quiz-q-text { font-weight: 700; font-size: 18px; line-height: 1.5; color: var(--text); }
+        
+        .choice-btn {
+            width: 100%; padding: 16px 20px; margin-bottom: 12px; border-radius: 15px; border: 2px solid var(--pink-border);
+            background: #fff; cursor: pointer; text-align: left; font-family: var(--font); transition: 0.2s;
+            display: flex; align-items: center; gap: 15px; font-size: 15px; font-weight: 500;
+        }
+        .choice-btn:hover:not(:disabled) { background: var(--pink-pale); border-color: var(--pink); }
+        .choice-btn.correct { background: #E8F5E9; border-color: #4CAF50; color: #2E7D32; }
+        .choice-btn.wrong { background: #FFEBEE; border-color: #F44336; color: #C62828; }
+        .choice-letter { width: 28px; height: 28px; background: var(--pink-pale); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; color: var(--pink); flex-shrink: 0; }
+
+        .explanation { background: var(--pink-pale); padding: 20px; border-radius: 15px; margin-bottom: 20px; border-left: 5px solid var(--pink); font-size: 14px; }
+        .next-btn { width: 100%; padding: 18px; background: var(--pink); color: #fff; border: none; border-radius: 15px; font-weight: 900; cursor: pointer; font-size: 16px; box-shadow: 0 4px 15px rgba(233,30,140,0.3); }
+
+        footer { background: var(--brown); color: #fff; padding: 40px 24px; text-align: center; font-size: 13px; opacity: 0.9; }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 28px; }
+            .hero { min-height: 500px; padding-top: 100px; }
+            .hero-content { padding: 24px; }
+            .nav-btn:not(.cta) { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a class="nav-logo" href="#" onclick="showPage('home')">
+        <span class="nav-logo-icon">🍰</span>
+        <span class="nav-logo-text">Pâtisserie Belle</span>
+    </a>
+    <div class="nav-links">
+        <button class="nav-btn active" id="nav-home" onclick="showPage('home')">ホーム</button>
+        <button class="nav-btn" id="nav-menu" onclick="showPage('menu')">商品一覧</button>
+        <button class="nav-btn cta" onclick="showPage('training')">研修開始</button>
+    </div>
+</nav>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+    <div class="hero">
+        <div class="hero-content">
+            <h1>特別な日の思い出を、<br>ひとつひとつ丁寧に。</h1>
+            <p>パティスリー・ベルへようこそ。<br>最高の一品に、最高のおもてなしを添えて。</p>
+            <button class="btn-hero-main" onclick="showPage('training')">トレーニングを開始する</button>
+        </div>
+    </div>
+    <div class="section">
+        <h2 class="section-title">学習カテゴリー</h2>
+        <p class="section-sub">まずは基礎知識から身につけましょう</p>
+        <div class="cards-grid" id="category-grid"></div>
+    </div>
+</div>
+
+<!-- MENU -->
+<div id="page-menu" class="page">
+    <div class="section">
+        <h2 class="section-title">商品一覧</h2>
+        <p class="section-sub">全8品の商品情報を確認できます</p>
+        <div class="menu-grid" id="menu-grid"></div>
+    </div>
+</div>
+
+<!-- TRAINING -->
+<div id="page-training" class="page">
+    <div class="section">
+        <h2 class="section-title">研修メニュー</h2>
+        <p class="section-sub">AIが最新の接客事例に基づいた問題を作成します</p>
+        <div class="cards-grid" id="training-grid"></div>
+    </div>
+</div>
+
+<!-- QUIZ -->
+<div id="page-quiz" class="page">
+    <div id="quiz-loading" style="padding: 100px 20px; text-align: center; display:none;">
+        <div style="font-size: 60px; margin-bottom: 20px; animation: bounce 1s infinite;">🍓</div>
+        <h3 id="loading-msg">AIが研修プログラムを作成中...</h3>
+    </div>
+    <div id="quiz-content" style="display:none">
+        <div id="quiz-header" class="lesson-header">
+            <div class="quiz-progress-bar" style="max-width: 600px; margin: 0 auto 15px auto;"><div class="quiz-progress-fill" id="progress-fill"></div></div>
+            <div id="q-header-title"></div>
+        </div>
+        <div class="quiz-wrap">
+            <div id="q-number" style="font-size:12px; color:var(--muted); margin-bottom:8px; text-align: center; font-weight: 700;"></div>
+            <div class="quiz-question-box">
+                <div class="quiz-q-text" id="q-text"></div>
+            </div>
+            <div id="choices-box"></div>
+            <div id="quiz-feedback" style="display:none">
+                <div class="explanation" id="exp-text"></div>
+                <button class="next-btn" id="btn-next" onclick="handleNext()">次へ進む</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- RESULT -->
+<div id="page-result" class="page">
+    <div class="section">
+        <div class="result-card">
+            <h2 id="res-title" style="font-weight: 900; color: var(--brown);">研修修了！</h2>
+            <div class="score-ring" id="res-score">0%</div>
+            <p id="res-msg" style="margin-bottom:24px; color:var(--text); font-weight: 500;"></p>
+            <div id="res-details" style="margin-bottom:24px; text-align: left;"></div>
+            <button class="next-btn" onclick="showPage('training')">別の研修を受ける</button>
+        </div>
+    </div>
+</div>
+
+<footer>
+    &copy; 2024 Pâtisserie Belle Staff Training System<br>
+    お客様に愛されるお店作りを。
+</footer>
+
+<script>
+const apiKey = ""; 
+
+const MENU = [
+    { id:1, name:"フレジエ", category:"ホールケーキ", price:680, emoji:"🍰", description:"フランス伝統のいちごケーキ。カスタードクリームといちごをムスリンクリームで包んだ上品な一品。", allergens:"小麦・卵・乳", season:"春限定" },
+    { id:2, name:"オペラ", category:"ホールケーキ", price:720, emoji:"🍫", description:"コーヒーシロップ、バタークリーム、ガナッシュを重ねた重厚な味わいのパリ伝統菓子。", allergens:"小麦・卵・乳", season:"通年" },
+    { id:3, name:"モンブラン", category:"ショートケーキ", price:550, emoji:"🌰", description:"和栗のマロンクリームを使用。中にはサクサクのメレンゲと生クリーム。", allergens:"小麦・卵・乳", season:"秋冬限定" },
+    { id:4, name:"パリ・ブレスト", category:"シュー菓子", price:490, emoji:"🍩", description:"リング型のシュー生地に濃厚なヘーゼルナッツプラリネクリームをサンド。", allergens:"小麦・卵・乳・ナッツ", season:"通年" },
+    { id:5, name:"タルト・シトロン", category:"タルト", price:520, emoji:"🍋", description:"瀬戸内レモンのクリームとイタリアンメレンゲを合わせた爽やかなタルト。", allergens:"小麦・卵・乳", season:"通年" },
+    { id:6, name:"ガトー・ショコラ", category:"焼き菓子", price:480, emoji:"🍫", description:"カカオ72%のチョコを使用。小麦粉を最小限に抑えたしっとり濃厚な食感。", allergens:"小麦・卵・乳", season:"通年" },
+    { id:7, name:"シャルロット", category:"ホールケーキ", price:750, emoji:"🫐", description:"貴婦人の帽子を模したケーキ。ビスキュイ生地の中にババロアとベリー。", allergens:"小麦・卵・乳・ゼラチン", season:"通年" },
+    { id:8, name:"カヌレ", category:"焼き菓子", price:280, emoji:"🟫", description:"フランス・ボルドーの伝統菓子。外はカリッと、中はもちもちのラム酒香る一品。", allergens:"小麦・卵・乳", season:"通年" }
+];
+
+const CATEGORIES = {
+    name: { label: "商品名クイズ", icon: "🏷️", color: "#E91E8C", desc: "説明文や見た目から名前を当てるクイズです。まずは全商品を覚えましょう！" },
+    price: { label: "価格確認", icon: "💰", color: "#D4A000", desc: "レジ操作や会計案内を想定。正確な金額案内は信頼に繋がります。" },
+    feature: { label: "素材・アレルゲン", icon: "📖", color: "#6C4FC3", desc: "お客様の健康を守る大切な知識。こだわり素材も学びましょう。" },
+    reservation: { label: "予約・受注確認", icon: "📅", color: "#2E86C1", desc: "電話対応やプレートのメッセージ確認。ミスのない受注を。" },
+    complaint: { label: "クレーム対応", icon: "⚠️", color: "#C0392B", desc: "不測の事態に誠実に対応するためのマナーと手順を学びます。" },
+    recommend: { label: "接客提案", icon: "🎯", color: "#1A9E6A", desc: "シーンに合わせた最適な一品をご提案し、感動をお届けしましょう。" }
+};
+
+let quizState = { type: null, data: [], current: 0, score: 0, history: [] };
+
+function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(`page-${pageId}`).classList.add('active');
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    const btn = document.getElementById(`nav-${pageId}`);
+    if(btn) btn.classList.add('active');
+    window.scrollTo(0,0);
+}
+
+function init() {
+    const grid = document.getElementById('category-grid');
+    const tGrid = document.getElementById('training-grid');
+    const mGrid = document.getElementById('menu-grid');
+
+    Object.entries(CATEGORIES).forEach(([id, info]) => {
+        const html = `
+            <div class="card" onclick="startQuiz('${id}')">
+                <div class="card-icon">${info.icon}</div>
+                <div class="card-title">${info.label}</div>
+                <div class="card-desc">${info.desc}</div>
+            </div>`;
+        grid.innerHTML += html;
+        tGrid.innerHTML += html;
+    });
+
+    MENU.forEach(item => {
+        mGrid.innerHTML += `
+            <div class="menu-item">
+                <div class="menu-img-placeholder">${item.emoji}</div>
+                <div style="font-weight:900; font-size:18px; color:var(--brown);">${item.name}</div>
+                <div class="menu-price">¥${item.price.toLocaleString()}</div>
+                <div style="font-size:12px; color:#666; margin:12px 0; min-height:3em;">${item.description}</div>
+                <div style="font-size:11px; color:var(--muted); background:var(--pink-pale); padding:4px 8px; border-radius:5px; display:inline-block;">⚠️ ${item.allergens}</div>
+            </div>`;
+    });
+}
+
+async function callGemini(prompt) {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+    const payload = {
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { responseMimeType: "application/json" }
+    };
+
+    for (let i = 0; i < 5; i++) {
+        try {
+            const res = await fetch(url, { method: 'POST', body: JSON.stringify(payload) });
+            if (!res.ok) throw new Error('API Error');
+            const data = await res.json();
+            return JSON.parse(data.candidates[0].content.parts[0].text);
+        } catch (e) {
+            await new Promise(r => setTimeout(r, Math.pow(2, i) * 1000));
+        }
+    }
+    throw new Error('All retries failed');
+}
+
+async function startQuiz(type) {
+    quizState = { type, data: [], current: 0, score: 0, history: [] };
+    showPage('quiz');
+    document.getElementById('quiz-loading').style.display = 'block';
+    document.getElementById('quiz-content').style.display = 'none';
+
+    const info = CATEGORIES[type];
+    const prompt = `
+        あなたはパティスリー「ベル」の研修担当です。以下のメニュー情報とカテゴリーに基づいて、
+        スタッフ向けの実践的な4択クイズを5問作成してください。
+        
+        【メニュー】
+        ${JSON.stringify(MENU)}
+
+        【カテゴリー】
+        ${info.label}: ${info.desc}
+
+        【作成のガイドライン】
+        - 選択肢は紛らわしいものを含め、実践的にすること。
+        - 解説には、店員としての心構えや、具体的なセリフを入れること。
+        - 出力形式はJSONのみ: {"quizzes": [{"question": "...", "choices": ["A", "B", "C", "D"], "answer": 0, "explanation": "..."}]}
+    `;
+
+    try {
+        const result = await callGemini(prompt);
+        quizState.data = result.quizzes;
+        renderQuestion();
+    } catch (e) {
+        document.getElementById('loading-msg').innerText = "エラーが発生しました。トップに戻ります。";
+        setTimeout(() => showPage('home'), 2000);
+    }
+}
+
+function renderQuestion() {
+    document.getElementById('quiz-loading').style.display = 'none';
+    document.getElementById('quiz-content').style.display = 'block';
+    
+    const q = quizState.data[quizState.current];
+    const info = CATEGORIES[quizState.type];
+    
+    document.getElementById('quiz-header').style.background = info.color;
+    document.getElementById('q-header-title').innerHTML = `<h2 style="font-family: var(--font); font-weight: 900;">${info.icon} ${info.label}</h2>`;
+    document.getElementById('progress-fill').style.width = `${(quizState.current / quizState.data.length) * 100}%`;
+    document.getElementById('q-number').innerText = `Question ${quizState.current + 1} / ${quizState.data.length}`;
+    document.getElementById('q-text').innerText = q.question;
+    document.getElementById('quiz-feedback').style.display = 'none';
+    
+    const box = document.getElementById('choices-box');
+    box.innerHTML = '';
+    q.choices.forEach((c, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'choice-btn';
+        btn.innerHTML = `<span class="choice-letter">${String.fromCharCode(65+i)}</span> ${c}`;
+        btn.onclick = () => selectChoice(i);
+        box.appendChild(btn);
+    });
+}
+
+function selectChoice(idx) {
+    const q = quizState.data[quizState.current];
+    const btns = document.querySelectorAll('.choice-btn');
+    btns.forEach(b => b.disabled = true);
+    
+    const isCorrect = idx === q.answer;
+    if(isCorrect) {
+        btns[idx].classList.add('correct');
+        quizState.score++;
+    } else {
+        btns[idx].classList.add('wrong');
+        btns[q.answer].classList.add('correct');
+    }
+    
+    quizState.history.push({ q: q.question, correct: isCorrect });
+    
+    document.getElementById('exp-text').innerHTML = `<strong>${isCorrect ? '✨ 正解！' : '❌ 残念...'}</strong><br>${q.explanation}`;
+    document.getElementById('quiz-feedback').style.display = 'block';
+    document.getElementById('btn-next').innerText = quizState.current === quizState.data.length - 1 ? '結果を見る' : '次へ進む';
+}
+
+function handleNext() {
+    quizState.current++;
+    if(quizState.current < quizState.data.length) {
+        renderQuestion();
+    } else {
+        showResult();
+    }
+}
+
+function showResult() {
+    showPage('result');
+    const pct = Math.round((quizState.score / quizState.data.length) * 100);
+    document.getElementById('res-score').innerText = `${pct}%`;
+    
+    let msg = "";
+    if(pct === 100) msg = "完璧です！今日からフロアのエースですね！";
+    else if(pct >= 80) msg = "素晴らしい！接客の基礎がしっかり身についています。";
+    else msg = "あと少しです。解説を読み込んで対応力を磨きましょう。";
+    
+    document.getElementById('res-msg').innerText = msg;
+    
+    const details = document.getElementById('res-details');
+    details.innerHTML = '<h3 style="font-family: var(--font); font-weight: 900; margin-bottom: 12px; border-bottom: 2px solid var(--pink-border);">今回の振り返り</h3>';
+    quizState.history.forEach((h, i) => {
+        details.innerHTML += `
+            <div style="margin-bottom: 10px; font-size: 13px; display: flex; align-items: center; gap: 8px;">
+                <span>${h.correct ? '✅' : '❌'}</span>
+                <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">問${i+1}: ${h.q}</span>
+            </div>`;
+    });
+}
+
+window.onload = init;
+</script>
+</body>
+</html>
